@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css"/>
+        <script>
+            const getHome = () =>{
+                fetch("home.html")
+                .then(xyz=> xyz.text())
+                .then(homedata =>{
+                    document.getElementById("container").innerHTML = homedata;
+                })
+            }
+
+            const getAbout = () =>{
+                fetch("about.html")
+                .then(xyz=> xyz.text())
+                .then(homedata =>{
+                    document.getElementById("container").innerHTML = homedata;
+                })
+            }
+
+            const getCity = () =>{
+                fetch("city.json")
+                .then(xyz=> xyz.json())
+                .then(cityarray =>{
+                    let data = "<h1> City List </h1>";
+
+                    for(let i=0; i<cityarray.length;i++){
+                        data = data + "<p class='four'>" + cityarray[i] + "</p>";
+                    }
+                    document.getElementById("container").innerHTML = data;
+                })
+            }
+
+            const getProduct = () =>{
+                fetch("https://cybotrix.com/webapi/product/getall")
+                .then(response=>response.json())
+                .then(proArray=>{
+                    let data = "<h1> Product List </h1>";
+                    proArray.map((pro,index)=>{
+                        data = data + "<div class='four smallfont'>";
+                        data = data + "<p>" + pro.productname + "</p>";
+                        data = data + "<p>Rs."+ pro.price +"</p>";
+                        data = data + "</div>";
+                    })
+                    document.getElementById("container").innerHTML = data;
+                })
+            }
+
+            const getComment = () =>{
+                fetch("https://jsonplaceholder.typicode.com/comments")
+                .then(response=>response.json())
+                .then(commentArray=>{
+                    let data = "<h1> Comment List </h1>";
+                   commentArray.map((comment, index)=>{
+                        data = data + "<div class='four smallfont'>";
+                        data = data + "<p>" + comment.name + "</p>";
+                        data = data + "<p>Rs."+ comment.email +"</p>";
+                        data = data + "<p>Rs."+ comment.body +"</p>";
+                        data = data + "</div>";
+                   })
+                    document.getElementById("container").innerHTML = data;
+                })
+            }
+        </script>
+    </head>
+    <body onload="getHome()">
+        <header>
+            <button onclick="getHome()"> Home </button>
+            <button onclick="getAbout()"> About Us </button>
+            <button onclick="getCity()"> City List </button>
+            <button onclick="getProduct()"> Product List </button>
+            <button onclick="getComment()"> Recent comments </button>
+        </header>
+
+        <section id="container">
+            <p align="center"> Loading...</p>
+        </section>
+
+        <footer>
+            <p> fetch(), .then(), .text(), .json(), async, await </p>
+        </footer>
+    </body>
+</html>
+
+<!--
+    1st - how to read static page using fetch()
+    2nd - how to read static json file data from server
+    3rd - how to read data from any online live server
+    4th - how to create own mock api and follow - get, post, put, delete
+-->
